@@ -1,14 +1,22 @@
-# Tailors App — نخ‌یار
+# نخ‌یار — Tailors App
 
-A Persian RTL marketplace prototype for discovering tailors, comparing portfolios, requesting quotes, tracking orders and simulating conditional payment release.
+نمونه اولیه مارکت‌پلیس خیاطی؛ شامل جست‌وجوی خیاط، تخصص، نمونه‌کار و امتیاز نمایشی، درخواست قیمت، سفارش، گفتگو، پیگیری مراحل و شبیه‌سازی تسویه مشروط.
 
-**Prototype only:** no real money is collected or escrowed; sample tailors and ratings are fictional.
-
-## Run
+## راه‌اندازی
 
 ```bash
 npm install
 npm run dev
 ```
 
-Production requires authentication, moderation, persistent backend, and a licensed payment partner supporting conditional settlement and dispute resolution.
+ساخت: `npm run build`
+
+> اطلاعات خیاط‌ها، نمونه‌کارها، امتیازها و قیمت‌ها ساختگی‌اند. داده سفارش در localStorage همان مرورگر ذخیره می‌شود. هیچ پرداخت واقعی یا نگهداری وجه انجام نمی‌شود.
+
+## قدم‌های بعدی
+
+- احراز هویت مشتری، خیاط و مدیر
+- دیتابیس و API واقعی با کنترل دسترسی هر سفارش
+- بارگذاری امن نمونه‌کارها، سنجش اصالت نظرها و احراز هویت خیاط
+- پیام‌رسانی، اعلان و فرآیند اختلاف
+- اتصال پرداخت **تنها پس از قرارداد با شریک مالی مجاز به تسویه مشروط**
