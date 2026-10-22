@@ -29,6 +29,10 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Check shared source
         run: npm run check:shared
+      - name: Run domain tests
+        run: npm run test:domain
+      - name: Check TypeScript
+        run: npm run typecheck
       - name: Generate native Android project with React Native Community CLI (no Expo)
         run: npm run bootstrap:android
       - name: Verify generated Android native project
