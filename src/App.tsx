@@ -2,8 +2,10 @@ import React, { useMemo, useState } from 'react';
 import { SafeAreaView, ScrollView, View, Text, TextInput, Pressable, StyleSheet, StatusBar, Platform, ActivityIndicator } from 'react-native';
 import { type Tailor } from './data/tailors';
 import { useTailors } from './hooks/useTailors';
+import { filterTailors } from './domain/search';
+import { colors } from './theme/tokens';
 
-const C = { dark: '#172b28', leaf: '#276b58', cream: '#f8f5ef', card: '#ffffff', ink: '#1f3430', muted: '#64756e', border: '#e8ebe6' };
+const C = colors;
 function TailorCard({ tailor, onSelect }: { tailor: Tailor; onSelect: (item: Tailor) => void }) {
   return <Pressable accessibilityRole="button" onPress={() => onSelect(tailor)} style={styles.card}>
     <View style={styles.avatar}><Text style={styles.avatarText}>{tailor.initials}</Text></View>
@@ -19,7 +21,7 @@ export default function App() {
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<Tailor | null>(null);
   const { items, loading, error, demo, refresh } = useTailors();
-  const filtered = useMemo(() => items.filter(t => [t.name, t.expertise, t.location].some(v => v.includes(query.trim()))), [items, query]);
+  const filtered = useMemo(() => filterTailors(items, query), [items, query]);
   return <SafeAreaView style={styles.root}>
     <StatusBar barStyle="light-content" backgroundColor={C.dark} />
     <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled">
