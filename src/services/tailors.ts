@@ -4,11 +4,11 @@ export type DataSource = 'demo' | 'api';
 export type TailorsResult = { items: Tailor[]; source: DataSource };
 export type TailorsRepository = { list(signal?: AbortSignal): Promise<TailorsResult> };
 
-const apiBaseUrl = (typeof process !== 'undefined' && process.env?.TAILORS_API_URL) || '';
+import { API_BASE_URL } from '../config/api';
 // React Native on-device: configure this URL for a host reachable from the Android emulator/device.
 // Never default to localhost: Android devices do not resolve localhost to the development PC.
 function apiUrl(): string {
-  return apiBaseUrl.replace(/\/$/, '');
+  return API_BASE_URL.trim().replace(/\/+$/, '');
 }
 const isTailor = (value: unknown): value is Tailor => {
   if (!value || typeof value !== 'object') return false;
