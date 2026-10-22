@@ -34,6 +34,10 @@ jobs:
       - uses: android-actions/setup-android@v3
       - name: Install JS dependencies
         run: npm install --no-audit --no-fund
+      - name: Configure Android public API URL
+        env:
+          TAILORS_API_URL: ${{ vars.TAILORS_API_URL }}
+        run: node scripts/configure-android-api.mjs
       - name: Bootstrap native Android folder
         run: npm run bootstrap:android
       - name: Verify native project files
