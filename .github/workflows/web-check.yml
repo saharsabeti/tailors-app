@@ -16,3 +16,35 @@ jobs:
       - run: npm run test:domain
       - run: npm run typecheck
       - run: npm run build:web
+
+  android-debug:
+    name: Android debug APK (no Expo)
+    needs: web
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install JS dependencies
+        run: npm install --no-audit --no-fund
+      - name: Bootstrap native Android folder
+        run: npm run bootstrap:android
+      - name: Verify native project files
+        run: test -f android/gradlew && test -f android/settings.gradle && test -f android/app/build.gradle
+      - name: Assemble debug APK
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: tailors-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 14
