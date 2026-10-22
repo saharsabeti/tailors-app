@@ -38,3 +38,11 @@ For Metro, use `npm start`. Web uses `npm run web`.
 - For unavoidable differences, use `*.web.tsx` and `*.native.tsx`.
 - Prefer `View`, `Text`, `Image`, `Pressable` etc. over browser-only elements.
 - Browser SEO for public tailor listing pages requires a future prerender/SSR plan; the Vite SPA starter does not provide it.
+
+## Platform API configuration
+
+Web: copy `.env.example` to `.env` and set `VITE_TAILORS_API_URL` to the public backend base URL. Restart Vite. This value is bundled into browser code, so never put credentials in it.
+
+Android: configure `API_BASE_URL` in `src/config/api.ts` with a URL reachable by the device. Web resolves the `.web.ts` override, while native uses `.ts`. Both default to clearly labeled demo content until configured. API response fields are provisional and must be checked against the backend.
+
+Automated checks: `.github/workflows/web-check.yml` runs TypeScript and web build in GitHub Actions. Android builds are not automated yet.
