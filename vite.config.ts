@@ -9,6 +9,9 @@ export default defineConfig({
     },
     extensions: ['.web.tsx', '.tsx', '.web.ts', '.ts', '.jsx', '.js', '.json'],
   },
-  define: { __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'), 'process.env.EXPO_OS': JSON.stringify('web') },
+  define: {
+    __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
+    'process.env.TAILORS_API_URL': JSON.stringify(process.env.TAILORS_API_URL || ''),
+  },
   server: { port: 5173 },
 });

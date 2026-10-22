@@ -16,8 +16,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-web": "^0.21.2",
-    "@react-native/new-app-screen": "0.81.5"
+    "react-native-web": "^0.21.2"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
@@ -30,6 +29,7 @@
     "@react-native-community/cli-platform-android": "20.0.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "@types/node": "^22.0.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.0"
   }
