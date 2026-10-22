@@ -11,7 +11,8 @@
     "android": "react-native run-android",
     "bootstrap:android": "node scripts/bootstrap-android.mjs",
     "typecheck": "tsc --noEmit",
-    "check:shared": "node scripts/check-shared.mjs"
+    "check:shared": "node scripts/check-shared.mjs",
+    "test:domain": "node --test src/domain/*.test.mjs"
   },
   "dependencies": {
     "react": "19.1.0",
