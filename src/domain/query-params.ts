@@ -1,0 +1,1 @@
+export function encodeQueryParams(params:Record<string,string|number|undefined>):string{const pairs=Object.entries(params).filter((item):item is [string,string|number]=>item[1]!==undefined);return pairs.map(([key,value])=>encodeURIComponent(key)+'='+encodeURIComponent(String(value))).join('&');}
