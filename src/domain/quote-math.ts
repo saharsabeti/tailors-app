@@ -1,0 +1,1 @@
+export function sumQuotes(amounts:readonly number[]):number|null{if(!amounts.every(x=>Number.isSafeInteger(x)&&x>=0))return null;const total=amounts.reduce((a,b)=>a+b,0);return Number.isSafeInteger(total)?total:null;}
