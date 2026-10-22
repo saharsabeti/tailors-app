@@ -4,6 +4,10 @@ import { type Tailor } from './data/tailors';
 import { useTailors } from './hooks/useTailors';
 import { filterTailors } from './domain/search';
 import { colors } from './theme/tokens';
+import { OrderRequestForm } from './components/OrderRequestForm';
+import { OrderPreview } from './components/OrderPreview';
+import { createPreviewOrder } from './domain/order-preview';
+import type { Order } from './domain/orders';
 
 const C = colors;
 function TailorCard({ tailor, onSelect }: { tailor: Tailor; onSelect: (item: Tailor) => void }) {
@@ -20,6 +24,7 @@ function TailorCard({ tailor, onSelect }: { tailor: Tailor; onSelect: (item: Tai
 export default function App() {
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<Tailor | null>(null);
+  const [preview, setPreview] = useState<Order | null>(null);
   const { items, loading, error, demo, refresh } = useTailors();
   const filtered = useMemo(() => filterTailors(items, query), [items, query]);
   return <SafeAreaView style={styles.root}>
@@ -31,11 +36,12 @@ export default function App() {
         <Text style={styles.subtitle}>نمونه‌کارها را ببین و خیاط مناسب را پیدا کن.</Text>
       </View>
       <View style={styles.content}>
-        {selected ? <>
+        {preview ? <OrderPreview order={preview} onClose={() => { setPreview(null); setSelected(null); }} /> : selected ? <>
           <Pressable onPress={() => setSelected(null)} accessibilityRole="button"><Text style={styles.back}>→ بازگشت به خیاط‌ها</Text></Pressable>
           <Text style={styles.sectionTitle}>{selected.name}</Text>
           <Text style={styles.detail}>{selected.expertise} · {selected.location}</Text>
-          <View style={styles.notice}><Text style={styles.noticeText}>نمایش پروفایل و ثبت سفارش در مرحله اتصال به بک‌اند تکمیل می‌شود. این فهرست فعلاً نمونه است.</Text></View>
+          <View style={styles.notice}><Text style={styles.noticeText}>اطلاعات نمایشی است؛ ثبت واقعی سفارش و پرداخت هنوز فعال نیست.</Text></View>
+          <OrderRequestForm tailorId={selected.id} onPreview={draft => setPreview(createPreviewOrder(draft))} />
         </> : <>
           <Text style={styles.sectionTitle}>خیاط خودت را پیدا کن</Text>
           {demo && <Text style={styles.demo}>حالت نمایشی؛ اطلاعات نمونه هستند.</Text>}
