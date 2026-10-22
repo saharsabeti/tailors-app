@@ -1,3 +1,5 @@
+import {validateRequestedDate} from './order-dates';
+import {normalizeOrderDescription,descriptionLength} from './order-notes';
 export type OrderStatus = 'draft' | 'requested' | 'quoted' | 'accepted' | 'in_progress' | 'ready' | 'delivered' | 'cancelled';
 export type OrderDraft = { tailorId: string; description: string; requestedDate?: string };
 export type Order = OrderDraft & { id: string; status: OrderStatus; createdAt: string };
@@ -11,7 +13,7 @@ export function canTransition(from: OrderStatus, to: OrderStatus): boolean {
 }
 export function validateOrderDraft(value: OrderDraft): string | null {
   if (!value.tailorId.trim()) return 'خیاط انتخاب نشده است.';
-  if (value.description.trim().length < 10) return 'توضیحات سفارش باید حداقل ۱۰ کاراکتر باشد.';
-  if (value.description.length > 2000) return 'توضیحات سفارش بیش از حد طولانی است.';
-  return null;
+  if (descriptionLength(value.description) < 10) return 'توضیحات سفارش باید حداقل ۱۰ کاراکتر باشد.';
+  if (descriptionLength(value.description) > 2000) return 'توضیحات سفارش بیش از حد طولانی است.';
+  return validateRequestedDate(value.requestedDate);
 }
