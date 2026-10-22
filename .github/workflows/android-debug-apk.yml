@@ -33,6 +33,10 @@ jobs:
         run: npm run test:domain
       - name: Check TypeScript
         run: npm run typecheck
+      - name: Configure Android public API URL
+        env:
+          TAILORS_API_URL: ${{ vars.TAILORS_API_URL }}
+        run: node scripts/configure-android-api.mjs
       - name: Generate native Android project with React Native Community CLI (no Expo)
         run: npm run bootstrap:android
       - name: Verify generated Android native project
