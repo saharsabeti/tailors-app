@@ -18,7 +18,7 @@ export function OrderRequestForm({tailorId,onPreview}:{tailorId:string;onPreview
     <Text style={styles.title}>درخواست دوخت (پیش‌نمایش)</Text>
     <Text style={styles.help}>نوع لباس، اندازه و جزئیات را توضیح بده. هنوز چیزی برای خیاط ارسال نمی‌شود.</Text>
     <TextInput multiline accessibilityLabel="توضیحات سفارش" placeholder="مثلاً دوخت مانتو با پارچه شخصی..." placeholderTextColor={colors.muted} textAlign="right" value={description} onChangeText={setDescription} style={[styles.input,styles.long]}/>
-    <TextInput accessibilityLabel="تاریخ درخواستی" placeholder="تاریخ درخواستی (اختیاری)" placeholderTextColor={colors.muted} textAlign="right" value={date} onChangeText={setDate} style={styles.input}/>
+    <TextInput accessibilityLabel="تاریخ درخواستی" placeholder="تاریخ میلادی YYYY-MM-DD (اختیاری)" placeholderTextColor={colors.muted} textAlign="right" value={date} onChangeText={setDate} style={styles.input}/>
     {error&&<Text accessibilityRole="alert" style={styles.error}>{error}</Text>}
     <PrimaryButton label="ساخت پیش‌نمایش سفارش" onPress={submit}/>
   </View>;
