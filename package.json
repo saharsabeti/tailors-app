@@ -12,7 +12,8 @@
     "bootstrap:android": "node scripts/bootstrap-android.mjs",
     "typecheck": "tsc --noEmit",
     "check:shared": "node scripts/check-shared.mjs",
-    "test:domain": "node --test src/domain/*.test.mjs"
+    "test:domain": "node --test src/domain/*.test.mjs",
+    "check:android": "node scripts/check-android-env.mjs"
   },
   "dependencies": {
     "react": "19.1.0",
