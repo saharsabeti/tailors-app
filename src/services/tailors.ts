@@ -1,12 +1,10 @@
+import { API_BASE_URL } from '../config/api';
 import { tailors as demoTailors, type Tailor } from '../data/tailors';
 
 export type DataSource = 'demo' | 'api';
 export type TailorsResult = { items: Tailor[]; source: DataSource };
 export type TailorsRepository = { list(signal?: AbortSignal): Promise<TailorsResult> };
 
-import { API_BASE_URL } from '../config/api';
-// React Native on-device: configure this URL for a host reachable from the Android emulator/device.
-// Never default to localhost: Android devices do not resolve localhost to the development PC.
 function apiUrl(): string {
   return API_BASE_URL.trim().replace(/\/+$/, '');
 }
