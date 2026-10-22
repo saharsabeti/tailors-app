@@ -1,0 +1,1 @@
+export function orderTag(description:string):string {const lower=description.toLocaleLowerCase();if(lower.includes('مانتو'))return 'مانتو';if(lower.includes('کت'))return 'کت';if(lower.includes('شلوار'))return 'شلوار';return 'سایر';}
