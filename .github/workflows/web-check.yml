@@ -13,5 +13,6 @@ jobs:
           node-version: '20'
       - run: npm install --no-audit --no-fund
       - run: npm run check:shared
+      - run: npm run test:domain
       - run: npm run typecheck
       - run: npm run build:web
