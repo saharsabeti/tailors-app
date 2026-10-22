@@ -1,0 +1,36 @@
+{
+  "name": "tailors-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "web": "vite --host 0.0.0.0",
+    "dev": "vite",
+    "build:web": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "bootstrap:android": "node scripts/bootstrap-android.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-web": "^0.21.2",
+    "@react-native/new-app-screen": "0.81.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/runtime": "^7.28.0",
+    "@react-native/babel-preset": "0.81.5",
+    "@react-native/metro-config": "0.81.5",
+    "@react-native/typescript-config": "0.81.5",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli-platform-android": "20.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.0"
+  }
+}

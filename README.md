@@ -1,14 +1,40 @@
-# Tailors App — نخ‌یار
+# TAILORS — نخ‌یار
 
-A Persian RTL marketplace prototype for discovering tailors, comparing portfolios, requesting quotes, tracking orders and simulating conditional payment release.
+Universal Persian marketplace starter for **Web + Android**, with one React Native component codebase and **no Expo**.
 
-**Prototype only:** no real money is collected or escrowed; sample tailors and ratings are fictional.
+## Stack
 
-## Run
+- React Native Community CLI for Android native runtime
+- React Native Web + Vite for browsers
+- TypeScript and shared React Native components
+- Existing backend stays separate in `tailors-backend`
+
+## Web
 
 ```bash
 npm install
-npm run dev
+npm run web
 ```
 
-Production requires authentication, moderation, persistent backend, and a licensed payment partner supporting conditional settlement and dispute resolution.
+## Android
+
+The Android native project must be generated once by the official **React Native Community CLI** on a machine with JDK 17 and the Android SDK.
+
+```bash
+npm install
+npm run bootstrap:android
+npm run android
+```
+
+The bootstrap script refuses to overwrite an existing `android/` folder. It generates native Android files locally; they are not checked into this starter branch. Commit generated `android/` to keep reproducible Android builds.
+
+For Metro, use `npm start`. Web uses `npm run web`.
+
+**Prototype only:** displayed tailors and ratings are sample content. No payment or escrow is implemented; production requires real authentication, moderation, backend integration, and a licensed payment processor.
+
+## Cross-platform conventions
+
+- Place shared UI and feature logic under `src/`.
+- For unavoidable differences, use `*.web.tsx` and `*.native.tsx`.
+- Prefer `View`, `Text`, `Image`, `Pressable` etc. over browser-only elements.
+- Browser SEO for public tailor listing pages requires a future prerender/SSR plan; the Vite SPA starter does not provide it.
