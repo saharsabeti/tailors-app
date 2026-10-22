@@ -8,6 +8,8 @@ import { OrderRequestForm } from './components/OrderRequestForm';
 import { OrderPreview } from './components/OrderPreview';
 import { createPreviewOrder } from './domain/order-preview';
 import type { Order } from './domain/orders';
+import { checkBackendConnection } from './services/health';
+import { PrimaryButton } from './components/PrimaryButton';
 
 const C = colors;
 function TailorCard({ tailor, onSelect }: { tailor: Tailor; onSelect: (item: Tailor) => void }) {
@@ -25,6 +27,14 @@ export default function App() {
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<Tailor | null>(null);
   const [preview, setPreview] = useState<Order | null>(null);
+  const [connectionMessage,setConnectionMessage] = useState<string | null>(null);
+  const [checkingConnection,setCheckingConnection] = useState(false);
+  async function testConnection() {
+    if (checkingConnection) return;
+    setCheckingConnection(true);
+    try { const result = await checkBackendConnection(); setConnectionMessage(result.message); }
+    finally { setCheckingConnection(false); }
+  }
   const { items, loading, error, demo, refresh } = useTailors();
   const filtered = useMemo(() => filterTailors(items, query), [items, query]);
   return <SafeAreaView style={styles.root}>
@@ -44,6 +54,8 @@ export default function App() {
           <OrderRequestForm tailorId={selected.id} onPreview={draft => setPreview(createPreviewOrder(draft))} />
         </> : <>
           <Text style={styles.sectionTitle}>خیاط خودت را پیدا کن</Text>
+          <PrimaryButton label={checkingConnection ? 'در حال بررسی ارتباط...' : 'بررسی اتصال بک‌اند'} onPress={testConnection} disabled={checkingConnection} />
+          {connectionMessage && <Text style={styles.demo} accessibilityRole="alert">{connectionMessage}</Text>}
           {demo && <Text style={styles.demo}>حالت نمایشی؛ اطلاعات نمونه هستند.</Text>}
           <TextInput accessibilityLabel="جست‌وجوی خیاط" style={styles.search} placeholder="نام، تخصص یا شهر را جست‌وجو کن" placeholderTextColor="#899990" value={query} onChangeText={setQuery} textAlign="right" />
           {loading ? <ActivityIndicator accessibilityLabel="در حال بارگذاری" size="large" color={C.leaf}/> : error ? <View style={styles.notice}>
