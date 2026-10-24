@@ -1,0 +1,1 @@
+export function parseRating(value:string):number|null{const normalized=value.replace(/[۰-۹]/g,ch=>String(ch.charCodeAt(0)-1776)).replace('٫','.');const score=Number(normalized);return Number.isFinite(score)&&score>=0&&score<=5?score:null;}
