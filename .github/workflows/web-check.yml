@@ -47,6 +47,16 @@ jobs:
       - name: Assemble debug APK
         working-directory: android
         run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Assemble standalone testing APK (bundled JS)
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon --stacktrace
+      - name: Upload standalone test APK (debug-key signed; not production)
+        uses: actions/upload-artifact@v4
+        with:
+          name: tailors-standalone-test-apk
+          path: android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 14
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
