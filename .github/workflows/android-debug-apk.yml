@@ -1,0 +1,55 @@
+name: Android debug APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/universal-react-native-web]
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'scripts/bootstrap-android.mjs'
+      - 'babel.config.js'
+      - 'metro.config.js'
+      - '.github/workflows/android-debug-apk.yml'
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Check shared source
+        run: npm run check:shared
+      - name: Run domain tests
+        run: npm run test:domain
+      - name: Check TypeScript
+        run: npm run typecheck
+      - name: Configure Android public API URL
+        env:
+          TAILORS_API_URL: ${{ vars.TAILORS_API_URL }}
+        run: node scripts/configure-android-api.mjs
+      - name: Generate native Android project with React Native Community CLI (no Expo)
+        run: npm run bootstrap:android
+      - name: Verify generated Android native project
+        run: test -f android/gradlew && test -f android/app/build.gradle && test -f android/settings.gradle
+      - name: Build debug APK
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Upload unsigned-for-production debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: tailors-android-debug
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 14

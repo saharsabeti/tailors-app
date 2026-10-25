@@ -1,0 +1,1 @@
+export function normalizeIranianPhone(value:string):string|null{const digits=value.replace(/[۰-۹]/g,ch=>String(ch.charCodeAt(0)-1776)).replace(/[٠-٩]/g,ch=>String(ch.charCodeAt(0)-1632)).replace(/[\s()-]/g,'');const number=digits.startsWith('+98')?'0'+digits.slice(3):digits.startsWith('98')?'0'+digits.slice(2):digits;return /^09\d{9}$/.test(number)?number:null;}
