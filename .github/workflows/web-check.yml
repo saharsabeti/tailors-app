@@ -50,6 +50,11 @@ jobs:
       - name: Assemble standalone testing APK (bundled JS)
         working-directory: android
         run: ./gradlew assembleRelease --no-daemon --stacktrace
+      - name: Verify standalone APK contains bundled JavaScript
+        run: |
+          APK="$(find android/app/build/outputs/apk/release -name '*.apk' -type f | head -n 1)"
+          test -n "$APK"
+          unzip -l "$APK" | grep -q 'assets/index.android.bundle'
       - name: Upload standalone test APK (debug-key signed; not production)
         uses: actions/upload-artifact@v4
         with:
